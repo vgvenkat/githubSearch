@@ -33,7 +33,7 @@ class Search extends Component {
     
   }
   render(){
-    console.log( Object.keys(jsonData.items));
+    
     return (
       <main>
         <BackButton history={this.props.history}/>
