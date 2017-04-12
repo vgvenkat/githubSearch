@@ -1,30 +1,26 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import Axios from 'axios';
+
 class Home extends Component {
   constructor(){
     super();
     this.state = {
-        githubData:{}
+        repoName:""
         
     }
     this.fetchData = this.fetchData.bind(this);
   }
- 
   fetchData(event){
     event.preventDefault();
-    console.log(this.context)
-   // this.context.router.transitionTo(`/repo/${this.repoName.value}`);
-    // Axios.get(`https://api.github.com/search/repositories?q=${this.repoName.value}`)
-    //   .then((response)=>{
-    //     this.setState({
-    //       githubData:response.data
-    //     });
-    //     console.log(this.state.githubData)
-    //   }).catch((err)=>{
-    //     console.log(err)
-    //   })
+    const history = this.props.history;
+    
+    
+     const repoName = this.repoName.value;
+     this.setState({repoName})
+    history.push(`/repo/${repoName}`);
+   
+    
     
   }
   render() {
@@ -33,7 +29,7 @@ class Home extends Component {
      <Header />
       <div className="container">
         <form onSubmit={this.fetchData}>
-            <input type="text" placeholder="github repo name" ref={(input) => this.repoName = input}/>
+            <input type="text" placeholder="github repo name" defaultValue={this.state.repoName} ref={(input) => this.repoName = input} required/>
             <button type="submit"> Go!</button>
           </form>
           
@@ -42,8 +38,6 @@ class Home extends Component {
     );
   }
 }
-Home.contextTypes = {
- router: PropTypes.object
-}
+
 export default Home;
 
