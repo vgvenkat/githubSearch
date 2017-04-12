@@ -25,12 +25,12 @@ class Home extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="home">
      <Header />
       <div className="container">
         <form onSubmit={this.fetchData}>
-            <input type="text" placeholder="github repo name" defaultValue={this.state.repoName} ref={(input) => this.repoName = input} required/>
-            <button type="submit"> Go!</button>
+            <input type="text" className="searchBar" placeholder="github repo name" defaultValue={this.state.repoName} ref={(input) => this.repoName = input} required/>
+            <button type="submit" className="button"> Go!</button>
           </form>
           
       </div>  

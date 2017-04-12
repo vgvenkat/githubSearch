@@ -9,26 +9,27 @@ class Search extends Component {
   constructor(){
     super();
     this.state={
-      repoName:""
+      repoName:"",
+      githubData:{}
     }
   this.setRepo = this.setRepo.bind(this);
   }
   setRepo(repoName){
     this.setState({repoName});
   }
-  componentDidMount(){
+  componentWillMount(){
     const repoName = this.props.match.params.repoName; 
      this.setRepo(repoName)
   
-    // Axios.get(`https://api.github.com/search/repositories?q=${repoName}`)
-    //   .then((response)=>{
-    //     this.setState({
-    //       githubData:response.data
-    //     });
-    //     console.log(this.state.githubData)
-    //   }).catch((err)=>{
-    //     console.log(err)
-    //   })
+    Axios.get(`https://api.github.com/search/repositories?q=${repoName}`)
+      .then((response)=>{
+        this.setState({
+          githubData:response.data
+        });
+        console.log(response)
+      }).catch((err)=>{
+        console.log(err)
+      })
 
     
   }
@@ -36,16 +37,15 @@ class Search extends Component {
     
     return (
       <main>
-        <BackButton history={this.props.history}/>
+        <BackButton  history={this.props.history}/>
         <Home />
-        <h1> Search:{this.state.repoName}</h1>
         {
-          Object.keys(jsonData.items)
+          Object.keys(this.state.githubData.items || {})
           .map((item)=> (
-            <RepoInfo key={jsonData.items[item].id} 
-            stars={jsonData.items[item].stargazers_count} 
-            name={jsonData.items[item].full_name}
-            description={jsonData.items[item].description}
+            <RepoInfo key={this.state.githubData.items[item].id} 
+            stars={this.state.githubData.items[item].stargazers_count} 
+            name={this.state.githubData.items[item].full_name}
+            description={this.state.githubData.items[item].description}
             history={this.props.history}
             />))
           

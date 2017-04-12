@@ -9,7 +9,7 @@ const RepoInfo = (props) => {
   return (<div className="repoInfo" onClick={gotoIssues}>
               <div className="repoLeft">
                 <p>{props.name}</p>
-                <p>{props.stars}</p>
+                <p>Stars: {props.stars}</p>
               </div>
               <div className="repoRight">
                 <p>{props.description}</p>

@@ -3,16 +3,18 @@ import BackButton from './Back';
 import Axios from 'axios';
 import issueData from './issueData.json';
 import IssueItem from './IssueItem';
+
 class Issues extends Component  {
    constructor(){
      super();
      this.issueData = this.issueData.bind(this);
      this.state={
        author:"",
-       repoName:""
+       repoName:"",
+       issueData:{}
      }
    }
-   componentDidMount(){
+   componentWillMount(){
      this.issueData();
    }
    issueData(){
@@ -22,13 +24,13 @@ class Issues extends Component  {
     selectedRepo = selectedRepo.replace('.','/');
     
     this.setState({author, repoName});
-      // Axios.get(`https://api.github.com/repos/${selectedRepo}/issues`)
-      // .then((response)=>{
-        
-      //   console.log(response)
-      // }).catch((err)=>{
-      //   console.log(err)
-      // })
+      Axios.get(`https://api.github.com/repos/${selectedRepo}/issues`)
+      .then((response)=>{
+        this.setState({issueData:response.data})
+        console.log(response)
+      }).catch((err)=>{
+        console.log(err)
+      })
   }
   render(){
   return (
@@ -39,11 +41,11 @@ class Issues extends Component  {
       <div className="issueList">
       <ul>
       {
-        Object.keys(issueData.data)
+        Object.keys(this.state.issueData || {})
         .map((issue)=> (
-          <IssueItem key={issueData.data[issue].id}
-          title = {issueData.data[issue].title}
-          url={issueData.data[issue].url}
+          <IssueItem key={this.state.issueData[issue].id}
+          title = {this.state.issueData[issue].title}
+          url={this.state.issueData[issue].url}
           />
         ))
       }

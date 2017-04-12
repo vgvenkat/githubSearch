@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Home from './Home';
 import Search from './Search';
 import Issues from './Issues';
+import './App.css';
 const AppRoutes = (props) => (
   <Router>
   <div>

@@ -5,7 +5,8 @@ const BackButton =(props) => {
    const history = props.history;
    history.goBack();
   }
-  return (<button onClick={goBack}> Back  </button>)
+  return (<button className="button" 
+  onClick={goBack}> Back  </button>)
 }
 
 export default BackButton;
